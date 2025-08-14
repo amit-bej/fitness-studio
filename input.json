@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Morning Yoga",
+        "datetime": "2025-08-15T06:30:00",
+        "instructor": "Ananya Sharma",
+        "available_slots": 12
+    },
+    {
+        "name": "Zumba Dance",
+        "datetime": "2025-08-15T18:00:00",
+        "instructor": "Rohan Mehta",
+        "available_slots": 15
+    },
+    {
+        "name": "HIIT Blast",
+        "datetime": "2025-08-16T07:00:00",
+        "instructor": "Priya Verma",
+        "available_slots": 10
+    },
+    {
+        "name": "Evening Pilates",
+        "datetime": "2025-08-16T18:30:00",
+        "instructor": "Vikram Singh",
+        "available_slots": 12
+    },
+    {
+        "name": "Power Yoga",
+        "datetime": "2025-08-17T06:30:00",
+        "instructor": "Isha Kapoor",
+        "available_slots": 0
+    },
+    {
+        "name": "Cardio Kickboxing",
+        "datetime": "2025-08-17T19:00:00",
+        "instructor": "Arjun Reddy",
+        "available_slots": 15
+    }
+]

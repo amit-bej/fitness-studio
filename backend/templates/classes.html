@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fitness Classes</title>
+    <style>
+        table { border-collapse: collapse; width: 80%; margin: 20px auto; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h2 style="position: absolute; top: 20px; right: 40px; margin: 0;">Welcome {{username}}</h2>
+    <h2 style="text-align:center;">Fitness Classes</h2>
+    <table id="classes-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Date & Time</th>
+                <th>Instructor</th>
+                <th>Available Slots</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+    <script>
+        fetch('/classes')
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector('#classes-table tbody');
+                data.forEach(cls => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${cls.id}</td>
+                        <td>${cls.name}</td>
+                        <td>${cls.datetime}</td>
+                        <td>${cls.instructor}</td>
+                        <td>${cls.available_slots}</td>
+                        <td><Button onClick="bookClass(${cls.id})">Book</Button></td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            });
+
+            function bookClass(classId){
+                fetch('/book',{
+                    method: 'POST',
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({class_id:classId})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                        location.reload(); // Refresh to update slots
+                    } else if (data.error) {
+                        alert(data.error);
+                    }
+                })
+                .catch(error => {
+                    alert('Booking failed!');
+                });
+            }
+    </script>
+</body>
+</html>

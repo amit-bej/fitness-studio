@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Bookings</title>
+    <style>
+        table { border-collapse: collapse; width: 80%; margin: 20px auto; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f2f2f2; }
+        #email-form { text-align: center; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">Your Bookings</h2>
+    <div id="email-form">
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <button onclick="loadBookings()">Show Bookings</button>
+    </div>
+    <table id="bookings-table" style="display:none;">
+        <thead>
+            <tr>
+                <th>Class Name</th>
+                <th>Date & Time</th>
+                <th>Instructor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+    <div id="info" style="text-align:center; margin-top:20px;"></div>
+    <script>
+        function loadBookings() {
+            const email = document.getElementById('email').value;
+            if (!email) {
+                alert('Please enter your email.');
+                return;
+            }
+            fetch(`/bookings?email=${encodeURIComponent(email)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const table = document.getElementById('bookings-table');
+                    const tbody = table.querySelector('tbody');
+                    tbody.innerHTML = '';
+                    document.getElementById('info').innerText = '';
+                    if (Array.isArray(data)) {
+                        if (data.length === 0) {
+                            table.style.display = 'none';
+                            document.getElementById('info').innerText = 'No bookings found.';
+                        } else {
+                            table.style.display = '';
+                            data.forEach(b => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td>${b.class_name}</td>
+                                    <td>${b['date&time']}</td>
+                                    <td>${b.instructor}</td>
+                                `;
+                                tbody.appendChild(row);
+                            });
+                        }
+                    } else if (data.info) {
+                        table.style.display = 'none';
+                        document.getElementById('info').innerText = data.info;
+                    } else if (data.error) {
+                        table.style.display = 'none';
+                        document.getElementById('info').innerText = data.error;
+                    }
+                });
+        }
+    </script>
+</body>
+</html>

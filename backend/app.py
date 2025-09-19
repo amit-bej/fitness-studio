@@ -72,7 +72,11 @@ def unauthorized():
     return jsonify({"success": False, "message": "Authentication required"}), 401
    
 if __name__ == "__main__":
+    import os
     os.chdir(os.path.dirname(os.path.abspath(__file__)) or ".")
+    
     with app.app_context():
-        seed() ##inititalize db with seed data
-    app.run(debug=True)
+        seed()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+

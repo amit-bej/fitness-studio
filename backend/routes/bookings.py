@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from models import FitnessClass, Booking
 from utils.validators import isValidEmail
 from utils.timezone import convert_timezone
-from flask_login import login_required
+from flask_login import login_required, current_user
 import logging
 
 bookings_bp = Blueprint("bookings", __name__)
@@ -11,7 +11,7 @@ bookings_bp = Blueprint("bookings", __name__)
 @login_required
 def get_bookings():
 
-    email = request.args.get("email")
+    email = current_user.email
     target_tz = request.args.get("tz", "Asia/Kolkata")
 
     if not email:
@@ -30,7 +30,7 @@ def get_bookings():
         local_dt = convert_timezone(cls.datetime_ist, target_tz)
         result.append({
             "class_name": cls.name,
-            "date&time": local_dt.strftime("%Y-%m-%d %H:%M %Z"),
+            "date_time": local_dt.strftime("%Y-%m-%d %H:%M %Z"),
             "instructor": cls.instructor
         })
     if len(result) == 0:

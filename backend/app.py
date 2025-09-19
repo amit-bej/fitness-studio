@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify, session, request
+from flask import Flask, Blueprint, jsonify, session, request, send_from_directory
 from flask_login import LoginManager,current_user
 from config import Config
 from models import db, Users
@@ -12,7 +12,7 @@ from seed import seed
 from flask_cors import CORS
 import os
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder=".", static_url_path="")
 app.config.from_object(Config)
 
 db.init_app(app)
@@ -29,8 +29,7 @@ login_manager.init_app(app)
 CORS(app, 
      supports_credentials=True, 
      origins=["http://localhost:3000"],
-     allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
-     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+     allow_headers=["Content-Type", "Authorization", "X-Requested-With"])
 
 '''
 This attaches the login manager to your Flask app.

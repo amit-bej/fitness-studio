@@ -221,15 +221,20 @@ function Home() {
                         <div className="max-w-2xl text-center">
                             <h3 className="text-xl font-bold mb-4">About Fitness Club</h3>
                             <p className="text-gray-400">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Porro consectetur ut hic ipsum et veritatis corrupti.
+                                Welcome to Fitness Club, your ultimate companion for discovering,
+                                booking, and managing fitness classes with ease. Whether you're a
+                                beginner or a seasoned athlete, our platform connects you with a
+                                variety of classes, trainers, and fitness studios tailored to your goals.
+                                We believe fitness should be accessible, convenient, and inspiring.
+                                With just a few taps, you can reserve your spot, track your progress,
+                                and stay motivated on your journey to a healthier, stronger you.
+                                Join our community and make every workout count!
                             </p>
                         </div>
                     </div>
                     <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
                         <p>
-                            &copy; {new Date().getFullYear()} All rights reserved |
-                            This template is inspired by Colorlib
+                            &copy; {new Date().getFullYear()} All rights reserved
                         </p>
                     </div>
                 </div>

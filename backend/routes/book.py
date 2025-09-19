@@ -8,11 +8,11 @@ from flask_login import login_required, current_user
 book_bp = Blueprint("book", __name__)
 
 @book_bp.route("/book", methods=["POST"])
-# @login_required
+@login_required
 def book_class():
-    # Debug: Check if user is authenticated
-    print(f"Current user authenticated: {current_user.is_authenticated}")
-    print(f"Current user: {current_user.username if current_user.is_authenticated else 'Not authenticated'}")
+    
+    # print(f"Current user authenticated: {current_user.is_authenticated}")
+    # print(f"Current user: {current_user.username if current_user.is_authenticated else 'Not authenticated'}")
     
     try:
         data = request.get_json(silent=True)
@@ -85,9 +85,9 @@ def book_class():
         return jsonify({"success": False, "error": "Internal server error"}), 500
 
 # Add a custom handler for unauthorized access
-@book_bp.errorhandler(401)
-def unauthorized(e):
-    return jsonify({
-        "success": False,
-        "error": "Authentication required. Please log in again."
-    }), 401
+# @book_bp.errorhandler(401)
+# def unauthorized(e):
+#     return jsonify({
+#         "success": False,
+#         "error": "Authentication required. Please log in again."
+#     }), 401

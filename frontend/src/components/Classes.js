@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getClasses, book } from "../services/userServices";
+import { useNavigate } from "react-router-dom";
 
 const ClassesTable = ({ username }) => {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [bookingLoading, setBookingLoading] = useState({}); // Track which button is loading
-
+  const [bookingLoading, setBookingLoading] = useState({});
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchClasses = async () => {
       try {
@@ -22,7 +23,6 @@ const ClassesTable = ({ username }) => {
   }, []);
 
   const handleBook = async (classId) => {
-    // Prevent multiple clicks
     if (bookingLoading[classId]) return;
     
     setBookingLoading(prev => ({ ...prev, [classId]: true }));
@@ -31,15 +31,15 @@ const ClassesTable = ({ username }) => {
       const result = await book(classId);
       if (result.success) {
         alert(result.message);
-        // Update local state to reflect booking
         setClasses(prev =>
           prev.map(cls =>
-            cls.id === classId
-              ? { ...cls, available_slots: Math.max(0, cls.available_slots - 1) }
-              : cls
+            cls.id === classId ? { ...cls, available_slots: Math.max(0, cls.available_slots - 1) } : cls
           )
         );
       } else {
+        if(result.error === "Authentication required"){
+          navigate('/login');
+        }
         console.log(result.error);
         alert(result.error || "Booking failed");
       }

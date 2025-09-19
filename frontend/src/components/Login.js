@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from "../services/authService";
 
-function Login({ onLogin }) { // Accept onLogin prop from App.js
+function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -20,16 +20,15 @@ function Login({ onLogin }) { // Accept onLogin prop from App.js
       
       if (response.success) {
         console.log("Login successful", response);
-        
-        // Store user in localStorage
+
         localStorage.setItem("user", JSON.stringify(response.data.user));
         
-        // Update App.js state via the onLogin prop
+
         if (onLogin) {
           onLogin(response.data.user);
         }
         
-        // Navigate to classes page
+
         navigate("/classes");
       } else {
         setMessage(response.message || "Login failed");

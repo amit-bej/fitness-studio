@@ -45,3 +45,23 @@ export const book = async (classId) => {
         return { success: false, error: error.message };
     }
 };
+
+
+export const getBooking = async () =>{
+    try{
+        const response = await fetch(`${API_URL}/bookings`,{
+            method:"GET",
+            credentials:"include"
+        });
+        const data = await response.json();
+         if (!response.ok) {
+            throw new Error(data.error || data.message || "Failed to get bookings");
+        }
+        
+        return { success: true, data: data };
+
+    }catch (error){
+         console.error("Booking error:", error);
+        return { success: false, error: error.message };
+    }
+}

@@ -1,120 +1,137 @@
-# Fitness Studio Booking API
+# Fitness Studio Management Web Application
 
-A Flask-based RESTful API for managing fitness classes and bookings. This project allows users to view available fitness classes, book a class, and retrieve their bookings. It supports timezone conversion and basic validation.
+A full-stack web application to streamline operations of a fitness studio: member registration, class scheduling, booking, and viewing bookings. Deployed on Render for accessibility.  
 
-## Features
+---
 
-- **List Classes:** View all available fitness classes with instructor, time, and slots.
-- **Book a Class:** Book a slot in a fitness class by providing your name and email.
-- **Prevent Duplicate Bookings:** Users cannot book the same class more than once.
-- **Prevent Overbooking:** Classes cannot be booked if no slots are available.
-- **Retrieve Bookings:** Get all bookings for a user by email.
-- **Timezone Support:** View class times in different timezones.
-- **Seed Data:** Easily seed the database with initial class data from a JSON file.
+## 🔗 Live Demo
 
-## Project Structure
+[https://fitness-studio-6le6.onrender.com/](https://fitness-studio-6le6.onrender.com/)
 
-```
-ftness-studio/
-│
-├── app.py                  # Main Flask app entry point
-├── models.py               # SQLAlchemy models for FitnessClass and Booking
-├── seed.py                 # Script to seed the database from input.json
-├── config.py               # Configuration (including timezone setup)
-│
-├── routes/
-│   ├── book.py             # Booking endpoint
-│   ├── bookings.py         # Bookings retrieval endpoint
-│   └── classes.py          # Classes listing endpoint
-│
-├── utils/
-│   ├── timezone.py         # Timezone conversion helpers
-│   └── validators.py       # Email and other validators
-│
-├── tests/
-│   └── test_api.py         # Unit tests for API endpoints
-│
-├── input.json              # Example seed data for classes
-└── README.md               # Project documentation
-```
+---
 
-## Setup & Installation
+## 🧰 Features
 
-1. **Clone the repository:**
-   ```
-   git clone https://github.com/yourusername/fitness-studio.git
-   cd fitness-studio
-   ```
+- User authentication (registration & login)  
+- Role-based dashboards for **Members**, **Trainers**, and **Admins**  
+- Class scheduling and availability  
+- Booking & viewing bookings  
+- Validation:  
+  - Prevent duplicate bookings  
+  - Prevent bookings when slots are full  
+  - Basic input validation (name, email etc.)  
+- Responsive UI for mobile & desktop  
+- RESTful APIs for frontend-backend communication  
+- Deployment on Render  
 
-2. **Create a virtual environment and activate it:**
-   ```
-   python -m venv venv
-   venv\Scripts\activate   # On Windows
-   ```
+---
 
-3. **Install dependencies:**
-   ```
-   pip install -r requirements.txt
-   ```
+## 🏗️ Tech Stack
 
-4. **Seed the database (optional):**
-   ```
-   python seed.py
-   ```
+| Component | Technology |
+|-----------|-------------|
+| Frontend | React (JavaScript) |
+| Backend | Flask (Python) |
+| Database | SQLite |
+| APIs | RESTful endpoints |
+| Deployment | Render |
+| Version Control | Git |
 
-5. **Run the Flask app:**
-   ```
-   python app.py
-   ```
+---
 
-## API Endpoints
+## 📁 Project Structure
 
-### List Classes
-
-- **GET /classes**
-- Optional query param: `tz` (timezone string, e.g. `America/New_York`)
-- **Example:**  
-  ```
-  GET /classes?tz=Asia/Kolkata
-  ```
-
-### Book a Class
-
-- **POST /book**
-- **Body (JSON):**
-  ```json
-  {
-    "class_id": 1,
-    "user_name": "John Doe",
-    "user_email": "john@example.com"
-  }
-  ```
-
-### Retrieve Bookings
-
-- **GET /bookings?email=user_email**
-- Optional query param: `tz` (timezone string)
-- **Example:**  
-  ```
-  GET /bookings?email=john@example.com&tz=Asia/Kolkata
-  ```
-
-## Running Tests
-
-To run the unit tests:
-
-```
-python -m unittest tests/test_api.py
+```text
+fitness-studio/
+├─ frontend/         # React frontend code
+├─ backend/          # Flask backend code
+├─ instance/         # configs or environment-specific data
+├─ venv/             # Python virtual environment
+├─ node_modules/     # React dependencies
+├─ .gitignore        
+├─ README.md         
+└─ package.json      
 ```
 
-## Notes
+---
 
-- All endpoints return JSON responses.
-- Timezone conversion uses `pytz`.
-- Duplicate bookings and overbooking are prevented.
-- Error messages are returned with appropriate HTTP status codes.
+## 🚀 Getting Started
 
+Follow these steps to run the project locally:
 
-## Author
+### 1. Clone the repository
 
-Amit Ranjan Bej
+```bash
+git clone https://github.com/amit-bej/fitness-studio.git
+cd fitness-studio
+```
+
+### 2. Setup the frontend
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+This starts the React frontend (usually on `http://localhost:3000`).
+
+### 3. Setup the backend
+
+```bash
+cd backend
+python3 -m venv venv        # or python -m venv venv
+source venv/bin/activate   # Linux/macOS
+# or venv\Scripts\activate on Windows
+pip install -r requirements.txt
+python app.py
+```
+
+This starts the Flask backend (e.g. `http://localhost:5000`).
+
+### 4. Connect frontend with backend
+
+Ensure your frontend API calls point to the backend URL (e.g. `http://localhost:5000`).
+
+---
+
+## 🧪 Testing
+
+If unit tests are included:
+
+```bash
+cd backend
+python -m unittest discover
+```
+
+---
+
+## ✅ Usage
+
+- Sign up / login as a *member*  
+- Admin/trainer can create and manage classes  
+- Members can view classes, book classes, and see booking history  
+- Fully responsive UI for desktop and mobile  
+
+---
+
+## ⚙️ Notes
+
+- SQLite is used for simplicity; for production, PostgreSQL or MySQL is recommended  
+- Authentication is basic; for production, consider JWT
+- Error handling and validation can be extended  
+- Deployed on **Render** with environment variables configured  
+
+---
+
+## 👤 Author
+
+**Amit Ranjan Bej**  
+📧 arb11459@gmail.com  
+🔗 [LinkedIn](https://linkedin.com/in/amit-r-bej)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.

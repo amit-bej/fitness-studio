@@ -73,7 +73,7 @@ def book_class():
         db.session.add(booking)
         db.session.commit()
 
-        logging.info(f"Booking successful – {user_name} booked '{fitness_class.name}'")
+        logging.info(f"Booking successful  {user_name} booked '{fitness_class.name}'")
         return jsonify({
             "success": True, 
             "message": f"Successfully booked {fitness_class.name}"

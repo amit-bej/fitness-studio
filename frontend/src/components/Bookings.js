@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { getBooking } from '../services/userServices';
+import { cancelBooking, getBooking } from '../services/userServices';
 
 function Bookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchBookings = async () => {
+    setLoading(true);
+    fetchBookings();
+  }, []);
+  const fetchBookings = async () => {
       try {
         const data = await getBooking();
         console.log(data);
@@ -18,10 +21,24 @@ function Bookings() {
         setLoading(false);
       }
     };
-    setLoading(true);
-    fetchBookings();
-  }, []);
+ const handleCancel = async (bookingId) => {
+   if (!window.confirm("Are you sure you want to cancel this booking?")) {
+    return;
+  }
+  try {
+    const result = await cancelBooking(bookingId);
 
+    if (result.success) {
+      alert(result.message);
+      // refresh list
+      fetchBookings();
+    } else {
+      alert(result.error || "Action failed");
+    }
+  } catch (error) {
+    alert("An error occurred while cancelling booking. Please try again.");
+  }
+};
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -46,11 +63,14 @@ function Bookings() {
                 <th className="py-3 px-4 border font-semibold">
                   Instructor
                 </th>
+                <th className="py-3 px-4 border font-semibold">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {bookings.data.map((element, index) => (
-                <tr key={index} className="hover:bg-gray-50">
+                <tr key={element.id} className="hover:bg-gray-50">
                   <td className="py-3 px-4 border font-medium">
                     {element.class_name}
                   </td>
@@ -59,6 +79,11 @@ function Bookings() {
                   </td>
                   <td className="py-3 px-4 border">
                     {element.instructor}
+                  </td>
+                  <td className="py-3 px-4 border text-center">
+                    <button className='px-4 py-2 center rounded-lg bg-red-700 text-white '
+                            onClick={() => handleCancel(element.id)}
+                    >Cancel</button>
                   </td>
                 </tr>
               ))}
